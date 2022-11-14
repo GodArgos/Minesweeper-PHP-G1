@@ -5,29 +5,24 @@
         public $tablero = array();
         public $minas = array();
         public $elegidos = array();
-        public $filas;
-        public $columnas;
+
 
         public function __construct(){
-            //filas
-            $this -> filas = 6;
-            //columnas
-            $this -> columnas = 6;
-            //tablero 6x6
+
             $this -> tablero = array(
                 range(1,6)
             );
             for($i=0;$i<5;$i++){
-                $this->tablero[] = range(1,$this->filas);
+                $this->tablero[] = range(1,6);
             };
-            //minas mismo tamaño que el tablero
+            
             $this -> minas = array(
                 range(1,6)
             );
             for($i=0;$i<5;$i++){
-                $this->minas[] = range(1,$this->filas);
+                $this->minas[] = range(1,6);
             }
-            //elegido, inicialmente todas en falso
+            
             $this -> elegidos = array(
                 array(false,false,false,false,false,false)
             );
@@ -36,12 +31,15 @@
             }
         }
 
-        public function generarMinas(){
+        public function generarMinas(){  
+            
             for($i=0;$i<count($this->minas);$i++){
                 for($j=0;$j<count($this->minas[$i]);$j++){
                     $this->minas[$i][$j]=rand(1,6);
                     if($this->minas[$i][$j]%2 == 0){
+                        
                         $this->minas[$i][$j] = 1;
+
                     }
                     else{
                         $this->minas[$i][$j] = 0;
@@ -72,7 +70,7 @@
 
         public function llenarTablero(){
             $this -> generarMinas();
-            $numMinasAlrededor = 0;
+            
             for($i=0;$i<count($this->minas);$i++){
                 for($j=0;$j<count($this->minas[$i]);$j++){
                     if($this->minas[$i][$j]==1){
@@ -135,9 +133,13 @@
         }
 
         public function mostrarTablero(){
+            echo "   1   2   3   4   5   6\n";
             for($i=0;$i<count($this->minas);$i++){
+                echo $i+1;
                 for($j=0;$j<count($this->minas[$i]);$j++){
+                    
                     if($this->elegidos[$i][$j]==true){
+                        
                         if($j==5){
                             echo " [" ,$this->tablero[$i][$j], "]";
                         }
@@ -162,7 +164,7 @@
             $continuar = false;
             for($i=0;$i<count($this->minas);$i++){
                 for($j=0;$j<count($this->minas[$i]);$j++){
-                    if($i=$fila && $j==$columna){
+                    if($i==$fila && $j==$columna){
                         if($this->tablero[$i][$j]=="M"){
                             $continuar = false;
                         }
